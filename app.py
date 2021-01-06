@@ -7,6 +7,8 @@ prime_numbers = [2]
 for n in range(3, int(stop)):
 	is_prime = True
 	for i in prime_numbers:
+		if i > n ** 0.5:
+			break
 		if n%i == 0:
 			is_prime = False
 			break
