@@ -1,25 +1,28 @@
 import datetime
 
-stop = input('Specify the range of numbers. (Use Ctrl + C if Lagged)')
+stop = input('Set the number limit. Stop app.py with Ctrl + C')
 start_time = datetime.datetime.now()
-prime_numbers = [2]
+prime_numbers = []
 
-for n in range(3, int(stop)):
-	is_prime = True
-	for i in prime_numbers:
-		if i > n ** 0.5:
+def generator():
+	D = {}
+	q = 2
+	while True:
+		if q == stop:
 			break
-		if n%i == 0:
-			is_prime = False
-			break
-	if is_prime == False:
-		continue
-	prime_numbers.append(n)
-			
+		if q not in D:
+			yield q
+			D[q*q] = [q]
+		else:
+			for i in D[q]:
+				D.setdefault(q + i, []).append(i)
+			del D[q]	
+		q += 1
+for b in generator():
+	prime_numbers.append(b)
 
 print(prime_numbers)
 print(f'There are {len(prime_numbers)} prime numbers until {stop}')
-print('This is V1.12')
 
 end_time = datetime.datetime.now()
 duartion = (end_time - start_time).total_seconds() * 1000
